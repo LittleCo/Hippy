@@ -11,6 +11,7 @@ const hippyVuePackage = require('../packages/hippy-vue/package.json');
 const cssLoaderPackage = require('../packages/hippy-vue-css-loader/package.json');
 const nativeComponentsPackage = require('../packages/hippy-vue-native-components/package.json');
 const routerPackage = require('../packages/hippy-vue-router/package.json');
+const webComponentsPackage = require('../packages/hippy-vue-web-components/package.json');
 
 const andHippyVueString = ` and Hippy-Vue v${hippyVuePackage.version}`;
 
@@ -100,6 +101,13 @@ const builds = {
     format: 'es',
     moduleName: 'hippy-vue-router',
     banner: banner('@hippy/vue-router', routerPackage.version),
+  },
+  '@hippy/vue-web-components': {
+    entry: resolvePackage('hippy-vue-web-components', 'src/index.ts'),
+    dest: resolvePackage('hippy-vue-web-components', 'dist/index.js'),
+    format: 'es',
+    moduleName: 'hippy-vue-web-components',
+    banner: banner('@hippy/vue-web-components', webComponentsPackage.version),
   },
 };
 
