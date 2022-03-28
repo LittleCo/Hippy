@@ -195,6 +195,8 @@ export default {
     };
   },
   mounted() {
+    console.log('VueNative', Vue.Native);
+    console.log('VueNative', Vue.prototype.Native);
     this.demon2 = this.$refs['demo-2'];
     setTimeout(() => {
       this.demon2.scrollTo(50, 0, 1000);

@@ -6,7 +6,7 @@
   "types": "dist.index.d.ts",
   "homepage": "http://hippyjs.org",
   "repository": "https://github.com/Tencent/Hippy/tree/master/packages/hippy-vue-web-components",
-  "author": "corinli <corinli@tencent.com>",
+  "author": "corinli<corinli@tencent.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Tencent/Hippy/issues"

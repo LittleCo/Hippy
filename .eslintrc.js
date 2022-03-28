@@ -33,19 +33,19 @@ module.exports = {
     'jsx-a11y',
   ],
   overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      extends: ['eslint-config-tencent/ts'],
-      rules: {
-        // Allow interface export
-        'no-undef': 'off',
-        // Note you must disable the base rule as it can report incorrect errors
-        'no-unused-vars': 'off',
-        '@typescript-eslint/consistent-type-assertions': 'off',
-        '@typescript-eslint/naming-convention': 'off',
-        '@typescript-eslint/prefer-for-of': 'off',
-      },
-    },
+    // {
+    //   files: ['**/*.ts', '**/*.tsx'],
+    //   extends: ['eslint-config-tencent/ts'],
+    //   rules: {
+    //     // Allow interface export
+    //     'no-undef': 'off',
+    //     // Note you must disable the base rule as it can report incorrect errors
+    //     'no-unused-vars': 'off',
+    //     '@typescript-eslint/consistent-type-assertions': 'off',
+    //     '@typescript-eslint/naming-convention': 'off',
+    //     '@typescript-eslint/prefer-for-of': 'off',
+    //   },
+    // },
   ],
   env: {
     browser: true,

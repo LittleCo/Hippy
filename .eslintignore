@@ -7,3 +7,4 @@ packages/hippy-vue/types
 packages/hippy-debug-server/webpack-dev-server/client
 packages/hippy-debug-server/webpack-dev-server/lib
 packages/hippy-vue-loader/lib
+packages/hippy-vue-web-components/dist

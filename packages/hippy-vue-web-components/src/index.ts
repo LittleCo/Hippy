@@ -1,4 +1,5 @@
-const dialog = () => null;
+import { Native } from './modules/native';
+
 export {
-  dialog,
+  Native,
 };

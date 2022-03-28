@@ -1,4 +1,5 @@
 const path = require('path');
+const typescript = require('rollup-plugin-typescript2');
 const alias = require('@rollup/plugin-alias');
 const { babel } = require('@rollup/plugin-babel');
 const cjs = require('@rollup/plugin-commonjs');
@@ -8,9 +9,9 @@ const flow = require('rollup-plugin-flow-no-whitespace');
 
 const VueVersion = require('vue/package.json').version;
 const hippyVuePackage = require('../packages/hippy-vue/package.json');
-const cssLoaderPackage = require('../packages/hippy-vue-css-loader/package.json');
-const nativeComponentsPackage = require('../packages/hippy-vue-native-components/package.json');
-const routerPackage = require('../packages/hippy-vue-router/package.json');
+// const cssLoaderPackage = require('../packages/hippy-vue-css-loader/package.json');
+// const nativeComponentsPackage = require('../packages/hippy-vue-native-components/package.json');
+// const routerPackage = require('../packages/hippy-vue-router/package.json');
 const webComponentsPackage = require('../packages/hippy-vue-web-components/package.json');
 
 const andHippyVueString = ` and Hippy-Vue v${hippyVuePackage.version}`;
@@ -71,37 +72,38 @@ const aliases = {
   '@native-components': resolvePackage('hippy-vue-native-components'),
 };
 
+// FIXME: 暂时只打包 hippy-vue-web
 const builds = {
-  '@hippy/vue': {
-    entry: resolvePackage('hippy-vue', 'src/index.js'),
-    dest: resolvePackage('hippy-vue', 'dist/index.js'),
-    format: 'es',
-    banner: banner('@hippy/vue', hippyVuePackage.version),
-  },
-  '@hippy/vue-css-loader': {
-    entry: resolvePackage('hippy-vue-css-loader', 'src/index.js'),
-    dest: resolvePackage('hippy-vue-css-loader', 'dist/index.js'),
-    format: 'cjs',
-    moduleName: 'hippy-vue-css-loader',
-    banner: banner('@hippy/vue-css-loader', cssLoaderPackage.version),
-    external(id) {
-      return id in Object.keys(cssLoaderPackage.dependencies);
-    },
-  },
-  '@hippy/vue-native-components': {
-    entry: resolvePackage('hippy-vue-native-components', 'src/index.js'),
-    dest: resolvePackage('hippy-vue-native-components', 'dist/index.js'),
-    format: 'es',
-    moduleName: 'hippy-vue-native-components',
-    banner: banner('@hippy/vue-native-components', nativeComponentsPackage.version),
-  },
-  '@hippy/vue-router': {
-    entry: resolvePackage('hippy-vue-router', 'src/index.js'),
-    dest: resolvePackage('hippy-vue-router', 'dist/index.js'),
-    format: 'es',
-    moduleName: 'hippy-vue-router',
-    banner: banner('@hippy/vue-router', routerPackage.version),
-  },
+  // '@hippy/vue': {
+  //   entry: resolvePackage('hippy-vue', 'src/index.js'),
+  //   dest: resolvePackage('hippy-vue', 'dist/index.js'),
+  //   format: 'es',
+  //   banner: banner('@hippy/vue', hippyVuePackage.version),
+  // },
+  // '@hippy/vue-css-loader': {
+  //   entry: resolvePackage('hippy-vue-css-loader', 'src/index.js'),
+  //   dest: resolvePackage('hippy-vue-css-loader', 'dist/index.js'),
+  //   format: 'cjs',
+  //   moduleName: 'hippy-vue-css-loader',
+  //   banner: banner('@hippy/vue-css-loader', cssLoaderPackage.version),
+  //   external(id) {
+  //     return id in Object.keys(cssLoaderPackage.dependencies);
+  //   },
+  // },
+  // '@hippy/vue-native-components': {
+  //   entry: resolvePackage('hippy-vue-native-components', 'src/index.js'),
+  //   dest: resolvePackage('hippy-vue-native-components', 'dist/index.js'),
+  //   format: 'es',
+  //   moduleName: 'hippy-vue-native-components',
+  //   banner: banner('@hippy/vue-native-components', nativeComponentsPackage.version),
+  // },
+  // '@hippy/vue-router': {
+  //   entry: resolvePackage('hippy-vue-router', 'src/index.js'),
+  //   dest: resolvePackage('hippy-vue-router', 'dist/index.js'),
+  //   format: 'es',
+  //   moduleName: 'hippy-vue-router',
+  //   banner: banner('@hippy/vue-router', routerPackage.version),
+  // },
   '@hippy/vue-web-components': {
     entry: resolvePackage('hippy-vue-web-components', 'src/index.ts'),
     dest: resolvePackage('hippy-vue-web-components', 'dist/index.js'),
@@ -158,6 +160,16 @@ function genConfig(name) {
           ],
         ],
         babelHelpers: 'runtime',
+      }),
+      typescript({
+        tsconfig: path.resolve(__dirname, '../tsconfig.json'),
+        tsconfigOverride: {
+          compilerOptions: {
+            declaration: false,
+            declarationMap: false,
+          },
+          exclude: ['**/__tests__/*.test.*'],
+        },
       }),
     ].concat(opts.plugins || []),
     output: {

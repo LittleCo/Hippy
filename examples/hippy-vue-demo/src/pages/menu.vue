@@ -70,6 +70,9 @@ export default {
       Vue,
     };
   },
+  mounted: () => {
+    console.log('nativeFeatureList', nativeDemos);
+  },
   /**
    * Hippy-Vue 的特殊生命周期方法
    *
